@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>천왕중학교 비상연락망</title>
+<style>
+  :root{
+    --ink:#1E2A38;
+    --ink-soft:#4B5A69;
+    --paper:#F5F3EE;
+    --card:#FFFFFF;
+    --line:#E4E0D6;
+    --accent:#3F6E52;
+    --accent-dark:#2E5240;
+    --accent-soft:#E7EFE9;
+    --danger:#B0503F;
+    --danger-soft:#F5E5E1;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    -webkit-tap-highlight-color:transparent;
+  }
+  .wrap{max-width:640px;margin:0 auto;padding:0 0 48px;}
+
+  header{
+    position:sticky;top:0;z-index:20;
+    background:var(--ink);
+    color:#fff;
+    padding:18px 20px 16px;
+  }
+  header h1{
+    margin:0 0 2px;
+    font-size:19px;
+    font-weight:700;
+    letter-spacing:-0.2px;
+  }
+  header p{
+    margin:0;
+    font-size:12.5px;
+    color:#B9C2C9;
+  }
+  .toolbar{
+    display:flex;
+    gap:8px;
+    padding:12px 20px;
+    background:var(--paper);
+    position:sticky;
+    top:64px;
+    z-index:19;
+    border-bottom:1px solid var(--line);
+  }
+  .search{
+    flex:1;
+    display:flex;
+    align-items:center;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:0 12px;
+  }
+  .search input{
+    border:none;outline:none;background:transparent;
+    width:100%;padding:10px 8px 10px 4px;font-size:15px;color:var(--ink);
+  }
+  .search svg{flex-shrink:0;color:var(--ink-soft);}
+  .edit-toggle{
+    border:1px solid var(--line);
+    background:var(--card);
+    color:var(--ink);
+    border-radius:10px;
+    padding:0 16px;
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+    white-space:nowrap;
+  }
+  .edit-toggle.on{
+    background:var(--accent);
+    border-color:var(--accent);
+    color:#fff;
+  }
+
+  .banner{
+    margin:12px 20px 0;
+    padding:10px 12px;
+    background:var(--accent-soft);
+    border:1px solid var(--accent);
+    color:var(--accent-dark);
+    border-radius:10px;
+    font-size:12.5px;
+    line-height:1.5;
+  }
+
+  main{padding:8px 20px 0;}
+
+  .dept{margin-top:24px;}
+  .dept-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:8px;
+    padding-bottom:6px;
+    border-bottom:2px solid var(--ink);
+  }
+  .dept-head h2{
+    margin:0;
+    font-size:15px;
+    font-weight:700;
+    letter-spacing:-0.1px;
+  }
+  .dept-head input{
+    font-size:15px;
+    font-weight:700;
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:4px 8px;
+    width:60%;
+    background:#fff;
+  }
+  .dept-actions{display:flex;gap:6px;}
+  .icon-btn{
+    border:none;
+    background:transparent;
+    cursor:pointer;
+    color:var(--ink-soft);
+    padding:4px;
+    font-size:13px;
+    border-radius:6px;
+  }
+  .icon-btn.danger{color:var(--danger);}
+  .icon-btn:active{background:var(--line);}
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:12px;
+    overflow:hidden;
+  }
+  .member-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:13px 14px;
+    border-bottom:1px solid var(--line);
+    cursor:pointer;
+  }
+  .member-row:last-child{border-bottom:none;}
+  .member-row:active{background:var(--accent-soft);}
+  .m-info{display:flex;flex-direction:column;gap:2px;min-width:0;}
+  .m-name{
+    font-size:15.5px;
+    font-weight:600;
+    color:var(--ink);
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  .m-name .note{
+    font-weight:400;
+    color:var(--ink-soft);
+    font-size:12.5px;
+    margin-left:6px;
+  }
+  .m-phone{
+    font-size:13px;
+    color:var(--ink-soft);
+    font-variant-numeric:tabular-nums;
+  }
+  .row-actions{
+    display:flex;
+    gap:8px;
+    margin-left:10px;
+    flex-shrink:0;
+  }
+  .call-icon, .sms-icon{
+    flex-shrink:0;
+    width:34px;height:34px;
+    border:none;
+    border-radius:50%;
+    background:var(--accent-soft);
+    color:var(--accent-dark);
+    display:flex;align-items:center;justify-content:center;
+    padding:0;
+    cursor:pointer;
+  }
+  .sms-icon{
+    background:#EAEFF3;
+    color:var(--ink-soft);
+  }
+  .call-icon:active, .sms-icon:active{filter:brightness(0.94);}
+  .row-edit-actions{display:flex;gap:4px;margin-left:10px;flex-shrink:0;}
+
+  .add-member-btn{
+    width:100%;
+    padding:12px;
+    border:none;
+    background:var(--accent-soft);
+    color:var(--accent-dark);
+    font-size:13.5px;
+    font-weight:600;
+    cursor:pointer;
+  }
+
+  .add-dept-btn{
+    margin-top:28px;
+    width:100%;
+    padding:14px;
+    border:1.5px dashed var(--ink-soft);
+    background:transparent;
+    color:var(--ink-soft);
+    border-radius:12px;
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+  }
+
+  .empty{
+    text-align:center;
+    color:var(--ink-soft);
+    padding:60px 20px;
+    font-size:14px;
+  }
+
+  /* modal */
+  .overlay{
+    position:fixed;inset:0;
+    background:rgba(20,24,28,0.45);
+    display:flex;align-items:flex-end;justify-content:center;
+    z-index:50;
+  }
+  .sheet{
+    background:#fff;
+    width:100%;
+    max-width:640px;
+    border-radius:16px 16px 0 0;
+    padding:20px 20px calc(20px + env(safe-area-inset-bottom));
+  }
+  .sheet h3{margin:0 0 16px;font-size:16px;}
+  .field{margin-bottom:14px;}
+  .field label{display:block;font-size:12.5px;color:var(--ink-soft);margin-bottom:5px;font-weight:600;}
+  .field input{
+    width:100%;
+    padding:11px 12px;
+    border:1px solid var(--line);
+    border-radius:9px;
+    font-size:15px;
+    background:var(--paper);
+  }
+  .field input:focus{outline:2px solid var(--accent);outline-offset:1px;}
+  .sheet-actions{display:flex;gap:8px;margin-top:6px;}
+  .btn{
+    flex:1;
+    padding:13px;
+    border-radius:10px;
+    border:none;
+    font-size:14.5px;
+    font-weight:700;
+    cursor:pointer;
+  }
+  .btn-primary{background:var(--accent);color:#fff;}
+  .btn-secondary{background:var(--paper);color:var(--ink);border:1px solid var(--line);}
+  .btn-danger{background:var(--danger-soft);color:var(--danger);}
+
+  .toast{
+    position:fixed;left:50%;bottom:24px;transform:translateX(-50%);
+    background:var(--ink);color:#fff;
+    padding:10px 18px;border-radius:20px;
+    font-size:13px;
+    z-index:60;
+    opacity:0;pointer-events:none;
+    transition:opacity .2s;
+  }
+  .toast.show{opacity:1;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>천왕중학교 비상연락망</h1>
+  <p id="subtitle">불러오는 중…</p>
+</header>
+
+<div class="toolbar">
+  <div class="search">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+    <input id="searchInput" type="text" placeholder="이름 또는 부서 검색" autocomplete="off">
+  </div>
+  <button class="edit-toggle" id="editToggle">편집</button>
+</div>
+
+<div class="wrap">
+  <div class="banner" id="sharedBanner">
+    이 목록은 이 링크를 여는 모든 사람에게 동일하게 보여요. 전화·문자는 누구나 이용할 수 있고, 편집은 관리자 비밀번호를 아는 사람만 할 수 있어요.
+  </div>
+  <main id="main"></main>
+</div>
+
+<div id="modalRoot"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+const STORAGE_KEY = 'chunwang-emergency-directory-v1';
+const ADMIN_PASSWORD_HASH = '0788f4be2f504aa3d3bab328cbeb8d7f406095cba92420aff8920c87cafc81ca';
+let isAuthenticated = false;
+
+async function sha256Hex(text){
+  const enc = new TextEncoder().encode(text);
+  const buf = await crypto.subtle.digest('SHA-256', enc);
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+const DEFAULT_DATA = [{"dept": "관리자", "members": [{"name": "교장 김영욱", "phone": "010-4575-3061"}, {"name": "교감 이은경", "phone": "010-4909-0927"}, {"name": "행정실장 구현정", "phone": "010-3633-1664"}]}, {"dept": "교무기획부", "members": [{"name": "이혜정", "phone": "010-4260-3955"}, {"name": "윤영아", "phone": "010-3160-2886"}, {"name": "차민희", "phone": "010-7590-9051"}, {"name": "조유라", "phone": "010-7189-1267"}, {"name": "노수현", "phone": "010-8724-2510"}, {"name": "박선미", "phone": "010-9912-1219"}, {"name": "김미애", "phone": "010-9705-5416"}]}, {"dept": "교육연구부", "members": [{"name": "김영미", "phone": "010-2664-3102"}, {"name": "오현영", "phone": "010-8268-0114"}, {"name": "김미영", "phone": "010-9053-9190"}]}, {"dept": "학생생활부", "members": [{"name": "김정희", "phone": "010-2408-8756"}, {"name": "주인선", "phone": "010-5018-3567"}, {"name": "안재웅(배지)", "phone": "010-8889-9804"}, {"name": "김중수(배지)", "phone": "010-8822-9597"}]}, {"dept": "3학년부", "members": [{"name": "오기식", "phone": "010-3761-0701"}, {"name": "정재연", "phone": "010-2252-8963"}, {"name": "탁하영", "phone": "010-8891-5058"}, {"name": "한혜윤", "phone": "010-9260-7203"}, {"name": "최혜순", "phone": "010-9355-1218"}, {"name": "고신자", "phone": "010-8990-8529"}, {"name": "정웅진", "phone": "010-3368-5401"}, {"name": "이승주", "phone": "010-4873-1121"}, {"name": "최경환", "phone": "010-5320-6509"}, {"name": "정혜영", "phone": "010-3704-5073"}, {"name": "정호영", "phone": "010-4122-7881"}, {"name": "남옥화", "phone": "010-8734-2576"}, {"name": "박진영", "phone": "010-7189-5732"}]}, {"dept": "2학년부", "members": [{"name": "장호", "phone": "010-6214-4260"}, {"name": "최영임", "phone": "010-6271-2668"}, {"name": "이성의", "phone": "010-2736-3294"}, {"name": "이은희", "phone": "010-8928-3990"}, {"name": "김준수", "phone": "010-8754-0495"}, {"name": "이주예", "phone": "010-4030-0673"}, {"name": "류제은", "phone": "010-2162-2174"}, {"name": "양지선", "phone": "010-3272-5944"}, {"name": "박현주", "phone": "010-2363-4461"}, {"name": "김미화", "phone": "010-8437-1810"}]}, {"dept": "1학년부", "members": [{"name": "정순화", "phone": "010-4016-8190"}, {"name": "이장근", "phone": "010-3311-4410"}, {"name": "김서영", "phone": "010-5314-3199"}, {"name": "김지은", "phone": "010-2134-1013"}, {"name": "김현주", "phone": "010-8453-8080"}, {"name": "김양희", "phone": "010-5122-7613"}, {"name": "박보라", "phone": "010-3624-2148"}, {"name": "차소연", "phone": "010-9702-8828"}, {"name": "유진순", "phone": "010-8255-2328"}, {"name": "이경애", "phone": "010-8799-0579"}]}, {"dept": "행정실", "members": [{"name": "단미선", "phone": "010-5571-7869"}, {"name": "이미연", "phone": "010-7679-2111"}, {"name": "정선영", "phone": "010-2745-7475"}, {"name": "이재원", "phone": "010-2238-4578"}, {"name": "김재영", "phone": "010-2559-8192"}, {"name": "이수진", "phone": "010-8777-9579"}, {"name": "백미영", "phone": "010-7755-5835"}, {"name": "김순미", "phone": "010-3021-2663"}, {"name": "김현아", "phone": "010-7428-0300"}, {"name": "안신영", "phone": "010-5792-0038"}, {"name": "박영실", "phone": "010-7159-4859"}, {"name": "박정은", "phone": "010-6482-6217"}, {"name": "정지숙", "phone": "010-6249-3086"}]}, {"dept": "상담복지부", "members": [{"name": "최승별", "phone": "010-2478-5902"}, {"name": "이시온", "phone": "010-9026-4128"}, {"name": "신비", "phone": "010-6533-0810"}, {"name": "한은선(특수실무)", "phone": "010-3937-4692"}, {"name": "김소연", "phone": "010-4636-4833"}, {"name": "전지민", "phone": "010-2339-3277"}]}, {"dept": "창의체험부", "members": [{"name": "서명지", "phone": "010-9089-0082"}, {"name": "길은미", "phone": "010-2345-8472"}, {"name": "최미연", "phone": "010-6227-6594"}]}, {"dept": "진로진학부", "members": [{"name": "김은이", "phone": "010-5123-7825"}]}, {"dept": "교육정보부", "members": [{"name": "이경용", "phone": "010-6279-9979"}, {"name": "최귀조", "phone": "010-5382-2255"}, {"name": "한상훈", "phone": "010-6478-8685"}, {"name": "정지현(과학실무)", "phone": "010-2957-8867"}]}, {"dept": "체육안전교육부", "members": [{"name": "박제훈", "phone": "010-3685-9000"}, {"name": "홍은나래", "phone": "010-7669-2849"}, {"name": "한혜원(보건)", "phone": "010-9878-3806"}, {"name": "원지애(보건)", "phone": "010-5124-7990"}]}, {"dept": "숙직실", "members": [{"name": "박종두", "phone": "010-8988-3302"}, {"name": "송재현", "phone": "010-6212-2077"}]}, {"dept": "장애인근로자", "members": [{"name": "전희자", "phone": "010-6348-7219"}]}, {"dept": "시간강사", "members": [{"name": "서희선", "phone": "010-2266-7336", "note": "뮤지컬(월)"}, {"name": "이윤정", "phone": "010-3121-3111", "note": "뮤지컬(수)"}, {"name": "하대훈", "phone": "010-2606-5695", "note": "뮤지컬(금)"}, {"name": "김민경", "phone": "010-2776-5572", "note": "미술"}, {"name": "정정림", "phone": "010-2111-7895", "note": "과학(수,금)"}]}, {"dept": "스포츠 강사(화,목)", "members": [{"name": "이헌(배드민턴)", "phone": "010-8121-1135"}, {"name": "김천년(피구)", "phone": "010-9545-7791"}, {"name": "이성일(농구)", "phone": "010-4658-6299"}, {"name": "김민지(탁구)", "phone": "010-3181-6257"}]}];
+
+let directory = null;
+let editMode = false;
+let searchTerm = '';
+
+const mainEl = document.getElementById('main');
+const subtitleEl = document.getElementById('subtitle');
+const modalRoot = document.getElementById('modalRoot');
+const toastEl = document.getElementById('toast');
+
+function showToast(msg){
+  toastEl.textContent = msg;
+  toastEl.classList.add('show');
+  setTimeout(()=>toastEl.classList.remove('show'), 1600);
+}
+
+function toTelHref(phone){
+  const digits = (phone || '').replace(/[^\d]/g, '');
+  if(!digits) return '#';
+  if(digits.startsWith('0')) return 'tel:+82' + digits.slice(1);
+  return 'tel:' + digits;
+}
+
+function toSmsHref(phone){
+  const digits = (phone || '').replace(/[^\d]/g, '');
+  if(!digits) return '#';
+  if(digits.startsWith('0')) return 'sms:+82' + digits.slice(1);
+  return 'sms:' + digits;
+}
+
+function uid(){
+  return Math.random().toString(36).slice(2, 9);
+}
+
+function ensureIds(data){
+  data.forEach(d => {
+    if(!d.id) d.id = uid();
+    d.members.forEach(m => { if(!m.id) m.id = uid(); });
+  });
+  return data;
+}
+
+async function loadDirectory(){
+  try{
+    const res = await window.storage.get(STORAGE_KEY, true);
+    if(res && res.value){
+      directory = JSON.parse(res.value);
+    } else {
+      directory = ensureIds(JSON.parse(JSON.stringify(DEFAULT_DATA)));
+      await window.storage.set(STORAGE_KEY, JSON.stringify(directory), true);
+    }
+  } catch(e){
+    directory = ensureIds(JSON.parse(JSON.stringify(DEFAULT_DATA)));
+  }
+  render();
+}
+
+async function saveDirectory(){
+  try{
+    const result = await window.storage.set(STORAGE_KEY, JSON.stringify(directory), true);
+    if(!result){ showToast('저장에 실패했어요. 다시 시도해 주세요.'); }
+  } catch(e){
+    showToast('저장 중 오류가 발생했어요.');
+  }
+}
+
+function totalMembers(){
+  return directory.reduce((sum, d) => sum + d.members.length, 0);
+}
+
+function render(){
+  subtitleEl.textContent = directory.length + '개 부서 · ' + totalMembers() + '명';
+  mainEl.innerHTML = '';
+
+  const term = searchTerm.trim().toLowerCase();
+
+  let anyVisible = false;
+
+  directory.forEach(dept => {
+    const filteredMembers = term
+      ? dept.members.filter(m =>
+          m.name.toLowerCase().includes(term) ||
+          (m.note || '').toLowerCase().includes(term) ||
+          m.phone.includes(term) ||
+          dept.dept.toLowerCase().includes(term))
+      : dept.members;
+
+    if(term && filteredMembers.length === 0 && !dept.dept.toLowerCase().includes(term)) return;
+    const membersToShow = term && !dept.dept.toLowerCase().includes(term) ? filteredMembers : (term ? dept.members.filter(m=>true) : dept.members);
+    // simpler: if searching, show matching members only (unless dept name matches, then show all)
+    const showAll = term && dept.dept.toLowerCase().includes(term);
+    const finalMembers = term ? (showAll ? dept.members : filteredMembers) : dept.members;
+
+    if(term && finalMembers.length === 0) return;
+    anyVisible = true;
+
+    const deptEl = document.createElement('section');
+    deptEl.className = 'dept';
+
+    const head = document.createElement('div');
+    head.className = 'dept-head';
+
+    if(editMode){
+      const nameInput = document.createElement('input');
+      nameInput.value = dept.dept;
+      nameInput.addEventListener('change', () => {
+        dept.dept = nameInput.value.trim() || dept.dept;
+        saveDirectory();
+        render();
+      });
+      head.appendChild(nameInput);
+
+      const actions = document.createElement('div');
+      actions.className = 'dept-actions';
+      const delBtn = document.createElement('button');
+      delBtn.className = 'icon-btn danger';
+      delBtn.textContent = '부서 삭제';
+      delBtn.onclick = () => confirmDeleteDept(dept.id);
+      actions.appendChild(delBtn);
+      head.appendChild(actions);
+    } else {
+      const h2 = document.createElement('h2');
+      h2.textContent = dept.dept;
+      head.appendChild(h2);
+    }
+    deptEl.appendChild(head);
+
+    const card = document.createElement('div');
+    card.className = 'card';
+
+    finalMembers.forEach(m => {
+      const row = document.createElement('div');
+      row.className = 'member-row';
+
+      const info = document.createElement('div');
+      info.className = 'm-info';
+      const nameDiv = document.createElement('div');
+      nameDiv.className = 'm-name';
+      nameDiv.textContent = m.name;
+      if(m.note){
+        const noteSpan = document.createElement('span');
+        noteSpan.className = 'note';
+        noteSpan.textContent = m.note;
+        nameDiv.appendChild(noteSpan);
+      }
+      const phoneDiv = document.createElement('div');
+      phoneDiv.className = 'm-phone';
+      phoneDiv.textContent = m.phone;
+      info.appendChild(nameDiv);
+      info.appendChild(phoneDiv);
+      row.appendChild(info);
+
+      if(editMode){
+        const rowActions = document.createElement('div');
+        rowActions.className = 'row-edit-actions';
+        const editBtn = document.createElement('button');
+        editBtn.className = 'icon-btn';
+        editBtn.textContent = '수정';
+        editBtn.onclick = (e) => { e.stopPropagation(); openMemberModal(dept.id, m.id); };
+        const delBtn = document.createElement('button');
+        delBtn.className = 'icon-btn danger';
+        delBtn.textContent = '삭제';
+        delBtn.onclick = (e) => { e.stopPropagation(); confirmDeleteMember(dept.id, m.id); };
+        rowActions.appendChild(editBtn);
+        rowActions.appendChild(delBtn);
+        row.appendChild(rowActions);
+        row.onclick = () => openMemberModal(dept.id, m.id);
+      } else {
+        const rowActions = document.createElement('div');
+        rowActions.className = 'row-actions';
+
+        const smsIcon = document.createElement('button');
+        smsIcon.className = 'sms-icon';
+        smsIcon.setAttribute('aria-label', m.name + '에게 문자 보내기');
+        smsIcon.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>';
+        smsIcon.onclick = (e) => { e.stopPropagation(); window.location.href = toSmsHref(m.phone); };
+
+        const callIcon = document.createElement('button');
+        callIcon.className = 'call-icon';
+        callIcon.setAttribute('aria-label', m.name + '에게 전화 걸기');
+        callIcon.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>';
+        callIcon.onclick = (e) => { e.stopPropagation(); window.location.href = toTelHref(m.phone); };
+
+        rowActions.appendChild(smsIcon);
+        rowActions.appendChild(callIcon);
+        row.appendChild(rowActions);
+        row.onclick = () => { window.location.href = toTelHref(m.phone); };
+      }
+
+      card.appendChild(row);
+    });
+
+    if(finalMembers.length === 0){
+      const emptyRow = document.createElement('div');
+      emptyRow.style.padding = '14px';
+      emptyRow.style.fontSize = '13px';
+      emptyRow.style.color = 'var(--ink-soft)';
+      emptyRow.textContent = '등록된 인원이 없어요.';
+      card.appendChild(emptyRow);
+    }
+
+    if(editMode){
+      const addBtn = document.createElement('button');
+      addBtn.className = 'add-member-btn';
+      addBtn.textContent = '+ 이 부서에 연락처 추가';
+      addBtn.onclick = () => openMemberModal(dept.id, null);
+      card.appendChild(addBtn);
+    }
+
+    deptEl.appendChild(card);
+    mainEl.appendChild(deptEl);
+  });
+
+  if(!anyVisible){
+    const empty = document.createElement('div');
+    empty.className = 'empty';
+    empty.textContent = '검색 결과가 없어요.';
+    mainEl.appendChild(empty);
+  }
+
+  if(editMode){
+    const addDeptBtn = document.createElement('button');
+    addDeptBtn.className = 'add-dept-btn';
+    addDeptBtn.textContent = '+ 새 부서 추가';
+    addDeptBtn.onclick = addDepartment;
+    mainEl.appendChild(addDeptBtn);
+  }
+}
+
+function addDepartment(){
+  const newDept = { id: uid(), dept: '새 부서', members: [] };
+  directory.push(newDept);
+  saveDirectory();
+  render();
+}
+
+function confirmDeleteDept(deptId){
+  const dept = directory.find(d => d.id === deptId);
+  if(!dept) return;
+  openConfirmModal(
+    '부서를 삭제할까요?',
+    '"' + dept.dept + '" 부서와 소속된 연락처 ' + dept.members.length + '건이 모두 삭제돼요.',
+    () => {
+      directory = directory.filter(d => d.id !== deptId);
+      saveDirectory();
+      render();
+    }
+  );
+}
+
+function confirmDeleteMember(deptId, memberId){
+  const dept = directory.find(d => d.id === deptId);
+  const member = dept.members.find(m => m.id === memberId);
+  if(!member) return;
+  openConfirmModal(
+    '연락처를 삭제할까요?',
+    '"' + member.name + '" 항목이 삭제돼요.',
+    () => {
+      dept.members = dept.members.filter(m => m.id !== memberId);
+      saveDirectory();
+      render();
+    }
+  );
+}
+
+function openConfirmModal(title, desc, onConfirm){
+  modalRoot.innerHTML = '';
+  const overlay = document.createElement('div');
+  overlay.className = 'overlay';
+  overlay.onclick = (e) => { if(e.target === overlay) modalRoot.innerHTML = ''; };
+
+  const sheet = document.createElement('div');
+  sheet.className = 'sheet';
+  sheet.innerHTML = '<h3>' + title + '</h3><p style="font-size:13.5px;color:var(--ink-soft);margin:-8px 0 18px;">' + desc + '</p>';
+
+  const actions = document.createElement('div');
+  actions.className = 'sheet-actions';
+  const cancelBtn = document.createElement('button');
+  cancelBtn.className = 'btn btn-secondary';
+  cancelBtn.textContent = '취소';
+  cancelBtn.onclick = () => { modalRoot.innerHTML = ''; };
+  const confirmBtn = document.createElement('button');
+  confirmBtn.className = 'btn btn-danger';
+  confirmBtn.textContent = '삭제';
+  confirmBtn.onclick = () => { modalRoot.innerHTML = ''; onConfirm(); };
+  actions.appendChild(cancelBtn);
+  actions.appendChild(confirmBtn);
+  sheet.appendChild(actions);
+  overlay.appendChild(sheet);
+  modalRoot.appendChild(overlay);
+}
+
+function openMemberModal(deptId, memberId){
+  const dept = directory.find(d => d.id === deptId);
+  const isNew = !memberId;
+  const member = isNew ? { name:'', phone:'', note:'' } : dept.members.find(m => m.id === memberId);
+
+  modalRoot.innerHTML = '';
+  const overlay = document.createElement('div');
+  overlay.className = 'overlay';
+  overlay.onclick = (e) => { if(e.target === overlay) modalRoot.innerHTML = ''; };
+
+  const sheet = document.createElement('div');
+  sheet.className = 'sheet';
+  sheet.innerHTML =
+    '<h3>' + (isNew ? '연락처 추가 · ' + dept.dept : '연락처 수정') + '</h3>' +
+    '<div class="field"><label>이름</label><input id="fName" type="text" placeholder="예: 홍길동" value="' + (member.name || '').replace(/"/g,'&quot;') + '"></div>' +
+    '<div class="field"><label>전화번호</label><input id="fPhone" type="tel" placeholder="예: 010-1234-5678" value="' + (member.phone || '').replace(/"/g,'&quot;') + '"></div>' +
+    '<div class="field"><label>비고 (선택)</label><input id="fNote" type="text" placeholder="예: 배지, 보건 등" value="' + (member.note || '').replace(/"/g,'&quot;') + '"></div>';
+
+  const actions = document.createElement('div');
+  actions.className = 'sheet-actions';
+  const cancelBtn = document.createElement('button');
+  cancelBtn.className = 'btn btn-secondary';
+  cancelBtn.textContent = '취소';
+  cancelBtn.onclick = () => { modalRoot.innerHTML = ''; };
+  const saveBtn = document.createElement('button');
+  saveBtn.className = 'btn btn-primary';
+  saveBtn.textContent = '저장';
+  saveBtn.onclick = () => {
+    const name = sheet.querySelector('#fName').value.trim();
+    const phone = sheet.querySelector('#fPhone').value.trim();
+    const note = sheet.querySelector('#fNote').value.trim();
+    if(!name || !phone){
+      showToast('이름과 전화번호를 입력해 주세요.');
+      return;
+    }
+    if(isNew){
+      dept.members.push({ id: uid(), name, phone, note });
+    } else {
+      member.name = name;
+      member.phone = phone;
+      member.note = note;
+    }
+    modalRoot.innerHTML = '';
+    saveDirectory();
+    render();
+  };
+  actions.appendChild(cancelBtn);
+  actions.appendChild(saveBtn);
+  sheet.appendChild(actions);
+  overlay.appendChild(sheet);
+  modalRoot.appendChild(overlay);
+  setTimeout(() => sheet.querySelector('#fName').focus(), 50);
+}
+
+document.getElementById('editToggle').addEventListener('click', () => {
+  if(editMode){
+    editMode = false;
+    isAuthenticated = false;
+    const btn = document.getElementById('editToggle');
+    btn.textContent = '편집';
+    btn.classList.remove('on');
+    render();
+  } else {
+    openPasswordModal();
+  }
+});
+
+function openPasswordModal(){
+  modalRoot.innerHTML = '';
+  const overlay = document.createElement('div');
+  overlay.className = 'overlay';
+  overlay.onclick = (e) => { if(e.target === overlay) modalRoot.innerHTML = ''; };
+
+  const sheet = document.createElement('div');
+  sheet.className = 'sheet';
+  sheet.innerHTML =
+    '<h3>관리자 확인</h3>' +
+    '<p style="font-size:13.5px;color:var(--ink-soft);margin:-8px 0 18px;">편집은 관리자 비밀번호를 입력한 경우에만 가능해요.</p>' +
+    '<div class="field"><label>비밀번호</label><input id="fPassword" type="password" placeholder="비밀번호 입력" autocomplete="off"></div>';
+
+  const actions = document.createElement('div');
+  actions.className = 'sheet-actions';
+  const cancelBtn = document.createElement('button');
+  cancelBtn.className = 'btn btn-secondary';
+  cancelBtn.textContent = '취소';
+  cancelBtn.onclick = () => { modalRoot.innerHTML = ''; };
+  const confirmBtn = document.createElement('button');
+  confirmBtn.className = 'btn btn-primary';
+  confirmBtn.textContent = '확인';
+  const doCheck = async () => {
+    const pw = sheet.querySelector('#fPassword').value;
+    const hash = await sha256Hex(pw);
+    if(hash === ADMIN_PASSWORD_HASH){
+      isAuthenticated = true;
+      editMode = true;
+      modalRoot.innerHTML = '';
+      const btn = document.getElementById('editToggle');
+      btn.textContent = '완료';
+      btn.classList.add('on');
+      render();
+    } else {
+      showToast('비밀번호가 올바르지 않아요.');
+    }
+  };
+  confirmBtn.onclick = doCheck;
+  actions.appendChild(cancelBtn);
+  actions.appendChild(confirmBtn);
+  sheet.appendChild(actions);
+  overlay.appendChild(sheet);
+  modalRoot.appendChild(overlay);
+
+  const pwInput = sheet.querySelector('#fPassword');
+  setTimeout(() => pwInput.focus(), 50);
+  pwInput.addEventListener('keydown', (e) => { if(e.key === 'Enter') doCheck(); });
+}
+
+document.getElementById('searchInput').addEventListener('input', (e) => {
+  searchTerm = e.target.value;
+  render();
+});
+
+loadDirectory();
+</script>
+</body>
+</html>
