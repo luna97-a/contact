@@ -3,6 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="비상연락망">
+<meta name="theme-color" content="#3F6E52">
+<link rel="apple-touch-icon" href="data:image/png;base64,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299/K4BD1DGVcU9er7eysXb3p++LfcCmEGHysXJHb39fZWPtusVFeu09rkdPjk96sGB1fcu1rrG8xENsGUSkUqnSElPWL11z9srFvgG57v8OtziIyGy1VFyrWZO33KC7x6tDowyRDy8tdrlddS2m0TwLRHgZd+i0utSEqSXlXwufPB5hGAcRma2WC1cr1yxaFmm4x3uH1Wr1knl5BXMXVTXV9ft9IuXElTEiJTH5HyWfeX0S3boXnnEQUW9/X1nNpaKFS/x/fxmRHJ/0yIqHBhz2htamu24w0WUQkUatPnz2K6m+2oRtHERks/efrDibN3uB//MfI7Qa7fIFBbnZOfUt1773EsIglDHi4OljdqdEDxcJ5ziIyDHkLCn/Ojttuv/zp3dMS0rZuPJhoyGqvsU0ciFZ0MogogOlRxFHULk9nlMVZcOu4cVzc0dzbZhGrV44M2dj0XqX29XQ2vz8j5/eWLQ+COsk+eIIt/McfhQtXPLKU1tHcwhyR4+tNzEmfuKW9D2Pb39G7MsxxykkryENTFnNpWfe2jamE+fBLENCCoqDiG6ZO55755UPjv8TD3sZDWXFQUQer+eDL/a/uHu72NdQhiXFxTGiqrH2F2+88HHJp9iF+KHQOIhoyDX89yP7trz9csPNu5/4mgSS3Wij3DhGmFqbtrz90vb3/yrFg9Ile/WH0uMgIp/PV1pZ9vM/v7DvxMFJvrRCsj1H+J8EGyWXx33ZdOVoWYnP55uTMVM7GS85P1B6RKqTYIjjO4ZcQ+Wm6i/On/T5fNlpmUF+SOGB08ekenA74rgLx5DzUkPVZ18f7xuwZaWkj+mk6ngcOH0UcYQGl8ddd8N06Myx6uZ6g06fMXWaWj2xh2iyfaxMwidraPH6fOUN1eUN1fFT4h4sWPXA4pXzs+ZM0MMdPJKddMGeY7Scw866G6Zj5/5z/MIps9Wi12qTYhMF7ktcbtfeY59IdSUY9hxj1mnp3n/y8/0nPzdGRBbMy1uak587c35WSvo4dycX6itku2EOcQTO7nScqTp3puocEcVERS/IzlmQPXfWtKzstMzUhOQxjRpw2Pcc/nBilhk4BV3PEUzGyKislIy0xOS0hJTUxKnJcUlx0TGxxpgY45TvXfPscrsu1FfsOfxha1f7ZK2Wgz3HhLA7ButumLj3Jo88SVer0Wo1mr4Bm7SvEUIck8D/PRDywG8rwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwPovuVqGoi2009cAAAAASUVORK5CYII=">
+<link rel="icon" href="data:image/png;base64,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299/K4BD1DGVcU9er7eysXb3p++LfcCmEGHysXJHb39fZWPtusVFeu09rkdPjk96sGB1fcu1rrG8xENsGUSkUqnSElPWL11z9srFvgG57v8OtziIyGy1VFyrWZO33KC7x6tDowyRDy8tdrlddS2m0TwLRHgZd+i0utSEqSXlXwufPB5hGAcRma2WC1cr1yxaFmm4x3uH1Wr1knl5BXMXVTXV9ft9IuXElTEiJTH5HyWfeX0S3boXnnEQUW9/X1nNpaKFS/x/fxmRHJ/0yIqHBhz2htamu24w0WUQkUatPnz2K6m+2oRtHERks/efrDibN3uB//MfI7Qa7fIFBbnZOfUt1773EsIglDHi4OljdqdEDxcJ5ziIyDHkLCn/Ojttuv/zp3dMS0rZuPJhoyGqvsU0ciFZ0MogogOlRxFHULk9nlMVZcOu4cVzc0dzbZhGrV44M2dj0XqX29XQ2vz8j5/eWLQ+COsk+eIIt/McfhQtXPLKU1tHcwhyR4+tNzEmfuKW9D2Pb39G7MsxxykkryENTFnNpWfe2jamE+fBLENCCoqDiG6ZO55755UPjv8TD3sZDWXFQUQer+eDL/a/uHu72NdQhiXFxTGiqrH2F2+88HHJp9iF+KHQOIhoyDX89yP7trz9csPNu5/4mgSS3Wij3DhGmFqbtrz90vb3/yrFg9Ile/WH0uMgIp/PV1pZ9vM/v7DvxMFJvrRCsj1H+J8EGyWXx33ZdOVoWYnP55uTMVM7GS85P1B6RKqTYIjjO4ZcQ+Wm6i/On/T5fNlpmUF+SOGB08ekenA74rgLx5DzUkPVZ18f7xuwZaWkj+mk6ngcOH0UcYQGl8ddd8N06Myx6uZ6g06fMXWaWj2xh2iyfaxMwidraPH6fOUN1eUN1fFT4h4sWPXA4pXzs+ZM0MMdPJKddMGeY7Scw866G6Zj5/5z/MIps9Wi12qTYhMF7ktcbtfeY59IdSUY9hxj1mnp3n/y8/0nPzdGRBbMy1uak587c35WSvo4dycX6itku2EOcQTO7nScqTp3puocEcVERS/IzlmQPXfWtKzstMzUhOQxjRpw2Pcc/nBilhk4BV3PEUzGyKislIy0xOS0hJTUxKnJcUlx0TGxxpgY45TvXfPscrsu1FfsOfxha1f7ZK2Wgz3HhLA7ButumLj3Jo88SVer0Wo1mr4Bm7SvEUIck8D/PRDywG8rwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwEIcwPovuVqGoi2009cAAAAASUVORK5CYII=">
 <title>천왕중학교 비상연락망</title>
 <style>
   :root{
@@ -39,6 +45,24 @@
     font-weight:700;
     letter-spacing:-0.2px;
   }
+  .header-title-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+  }
+  .title-edit-btn{
+    flex-shrink:0;
+    border:1px solid rgba(255,255,255,0.35);
+    background:transparent;
+    color:#fff;
+    border-radius:8px;
+    padding:5px 10px;
+    font-size:12px;
+    font-weight:600;
+    cursor:pointer;
+  }
+  .title-edit-btn:active{background:rgba(255,255,255,0.15);}
   header p{
     margin:0;
     font-size:12.5px;
@@ -279,7 +303,10 @@
 <body>
 
 <header>
-  <h1>천왕중학교 비상연락망</h1>
+  <div class="header-title-row">
+    <h1 id="headerTitle">천왕중학교 비상연락망</h1>
+    <button class="title-edit-btn" id="titleEditBtn" style="display:none;">이름 수정</button>
+  </div>
   <p id="subtitle">불러오는 중…</p>
 </header>
 
@@ -303,8 +330,10 @@
 
 <script>
 const STORAGE_KEY = 'chunwang-emergency-directory-v1';
+const TITLE_KEY = 'chunwang-app-title-v1';
 const ADMIN_PASSWORD_HASH = '0788f4be2f504aa3d3bab328cbeb8d7f406095cba92420aff8920c87cafc81ca';
 let isAuthenticated = false;
+let appTitle = '천왕중학교 비상연락망';
 
 async function sha256Hex(text){
   const enc = new TextEncoder().encode(text);
@@ -354,6 +383,69 @@ function ensureIds(data){
   });
   return data;
 }
+
+async function loadAppTitle(){
+  try{
+    const res = await window.storage.get(TITLE_KEY, true);
+    if(res && res.value){
+      appTitle = res.value;
+    } else {
+      await window.storage.set(TITLE_KEY, appTitle, true);
+    }
+  } catch(e){
+    // keep default appTitle
+  }
+  document.getElementById('headerTitle').textContent = appTitle;
+}
+
+async function saveAppTitle(newTitle){
+  appTitle = newTitle;
+  document.getElementById('headerTitle').textContent = appTitle;
+  try{
+    const result = await window.storage.set(TITLE_KEY, appTitle, true);
+    if(!result){ showToast('이름 저장에 실패했어요.'); }
+  } catch(e){
+    showToast('이름 저장 중 오류가 발생했어요.');
+  }
+}
+
+function openTitleModal(){
+  modalRoot.innerHTML = '';
+  const overlay = document.createElement('div');
+  overlay.className = 'overlay';
+  overlay.onclick = (e) => { if(e.target === overlay) modalRoot.innerHTML = ''; };
+
+  const sheet = document.createElement('div');
+  sheet.className = 'sheet';
+  sheet.innerHTML =
+    '<h3>앱 이름 수정</h3>' +
+    '<p style="font-size:13px;color:var(--ink-soft);margin:-8px 0 18px;">홈 화면 아이콘 이름은 각자 추가할 때 정해지지만, 앱 안에서 보이는 이름은 여기서 바꿀 수 있어요. 이모지도 넣을 수 있어요. (예: 📞 천왕중 비상연락망)</p>' +
+    '<div class="field"><label>앱 이름</label><input id="fTitle" type="text" value="' + appTitle.replace(/"/g,'&quot;') + '"></div>';
+
+  const actions = document.createElement('div');
+  actions.className = 'sheet-actions';
+  const cancelBtn = document.createElement('button');
+  cancelBtn.className = 'btn btn-secondary';
+  cancelBtn.textContent = '취소';
+  cancelBtn.onclick = () => { modalRoot.innerHTML = ''; };
+  const saveBtn = document.createElement('button');
+  saveBtn.className = 'btn btn-primary';
+  saveBtn.textContent = '저장';
+  saveBtn.onclick = () => {
+    const val = sheet.querySelector('#fTitle').value.trim();
+    if(!val){ showToast('이름을 입력해 주세요.'); return; }
+    modalRoot.innerHTML = '';
+    saveAppTitle(val);
+  };
+  actions.appendChild(cancelBtn);
+  actions.appendChild(saveBtn);
+  sheet.appendChild(actions);
+  overlay.appendChild(sheet);
+  modalRoot.appendChild(overlay);
+  setTimeout(() => sheet.querySelector('#fTitle').focus(), 50);
+}
+
+document.getElementById('titleEditBtn').addEventListener('click', openTitleModal);
 
 async function loadDirectory(){
   try{
@@ -666,6 +758,7 @@ document.getElementById('editToggle').addEventListener('click', () => {
     const btn = document.getElementById('editToggle');
     btn.textContent = '편집';
     btn.classList.remove('on');
+    document.getElementById('titleEditBtn').style.display = 'none';
     render();
   } else {
     openPasswordModal();
@@ -704,6 +797,7 @@ function openPasswordModal(){
       const btn = document.getElementById('editToggle');
       btn.textContent = '완료';
       btn.classList.add('on');
+      document.getElementById('titleEditBtn').style.display = 'inline-block';
       render();
     } else {
       showToast('비밀번호가 올바르지 않아요.');
@@ -726,6 +820,7 @@ document.getElementById('searchInput').addEventListener('input', (e) => {
   render();
 });
 
+loadAppTitle();
 loadDirectory();
 </script>
 </body>
